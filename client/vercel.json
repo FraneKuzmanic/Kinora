@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/share/:path*",
+      "destination": "https://server-liart-iota.vercel.app/share/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

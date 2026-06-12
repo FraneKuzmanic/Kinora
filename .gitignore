@@ -1,0 +1,51 @@
+# Environment files
+supabase/.env
+.env
+**/.env
+.env.*
+!.env.example
+!**/.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+dist/
+build/
+.vite/
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Supabase local artifacts
+.supabase/
+
+# Misc
+tmp/
+temp/
+mds/
+/.claude/

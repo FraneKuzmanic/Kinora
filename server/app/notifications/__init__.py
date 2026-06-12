@@ -1,0 +1,1 @@
+"""Backend notification pipeline."""

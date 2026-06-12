@@ -1,0 +1,612 @@
+{
+  "info": {
+    "_postman_id": "d51d8ecb-808c-4f74-bd76-bfbe2faf8f21",
+    "name": "Kinora Backend Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Supabase Password Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('access_token', body.access_token || '');",
+                  "pm.test('access token received', function () {",
+                  "  pm.expect(body.access_token).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{SUPABASE_ANON_KEY}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{active_email}}\",\n  \"password\": \"{{active_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SUPABASE_URL}}/auth/v1/token?grant_type=password",
+              "host": [
+                "{{SUPABASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "password"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cinema Management",
+      "item": [
+        {
+          "name": "Get My Cinema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('cinema_id', body.id || '');",
+                  "pm.test('cinema id captured', function () {",
+                  "  pm.expect(body.id).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/me",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Cinema",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated from Postman backend management collection\",\n  \"website\": \"https://kinora.example.com\",\n  \"phone\": \"+3851112233\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Cinema Logo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/logo",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "logo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Cinema Logo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/logo",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "logo"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Cinema Locations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Cinema Location",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('location_id', body.id || '');",
+                  "pm.test('location id captured', function () {",
+                  "  pm.expect(body.id).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location_name\": \"Postman Test Location\",\n  \"address_line1\": \"Savska cesta 1\",\n  \"postal_code\": \"10000\",\n  \"lat\": 45.804,\n  \"lon\": 15.971,\n  \"timezone\": \"Europe/Zagreb\",\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Cinema Location",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location_name\": \"Postman Updated Location\",\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations/{{location_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations",
+                "{{location_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Cinema Hall",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('hall_id', body.id || '');",
+                  "pm.test('hall id captured', function () {",
+                  "  pm.expect(body.id).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Hall\",\n  \"capacity\": 88,\n  \"allow_private_booking\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations/{{location_id}}/halls",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations",
+                "{{location_id}}",
+                "halls"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Cinema Hall",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Hall Updated\",\n  \"capacity\": 99,\n  \"allow_private_booking\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations/{{location_id}}/halls/{{hall_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations",
+                "{{location_id}}",
+                "halls",
+                "{{hall_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Cinema Hall",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations/{{location_id}}/halls/{{hall_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations",
+                "{{location_id}}",
+                "halls",
+                "{{hall_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Cinema Location",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/locations/{{location_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "locations",
+                "{{location_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Cinema Validators",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/validators",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "validators"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Cinema Validator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('validator_user_id', body.validator_user_id || '');",
+                  "pm.test('validator user id captured', function () {",
+                  "  pm.expect(body.validator_user_id).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"validator+new@example.com\",\n  \"password\": \"TempPass123\",\n  \"display_name\": \"Postman Validator\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/validators/create",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "validators",
+                "create"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Revoke Cinema Validator",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/cinemas/{{cinema_id}}/validators/{{validator_user_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "cinemas",
+                "{{cinema_id}}",
+                "validators",
+                "{{validator_user_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommendations",
+      "item": [
+        {
+          "name": "Create Recommendation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.environment.set('recommendation_id', body.id || '');",
+                  "pm.test('recommendation id captured', function () {",
+                  "  pm.expect(body.id).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cinema_id\": \"{{cinema_id}}\",\n  \"title\": \"Interstellar\",\n  \"message\": \"Please consider adding this film to an upcoming campaign.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/movie-recommendations",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "movie-recommendations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Admin Visible Recommendations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{back}}/movie-recommendations",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "movie-recommendations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Moderate Recommendation",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"reviewed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{back}}/movie-recommendations/{{recommendation_id}}",
+              "host": [
+                "{{back}}"
+              ],
+              "path": [
+                "movie-recommendations",
+                "{{recommendation_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
