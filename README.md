@@ -1,8 +1,8 @@
 # Kinora
 
-Kinora is a cinema-on-demand MVP that helps cinemas validate audience demand before committing to screenings. Audiences can vote for films, buy early-bird or confirmed tickets, request private cinema bookings, and validate admissions at the door. Cinema admins can manage campaigns, screenings, booking requests, recommendations, and analytics from one dashboard.
+Kinora is a cinema-on-demand platform that helps cinemas validate audience demand before committing to screenings. Audiences can vote for films, buy early-bird or confirmed tickets, request private cinema bookings, and validate admissions at the door. Cinema admins can manage campaigns, screenings, booking requests, recommendations, and analytics from one dashboard.
 
-The project was built as a full-stack student competition MVP focused on the question: what if cinema programming could be shaped by real audience demand instead of guesswork?
+The project was built as a part of the largest regional student competition in app development. Our MVP made it to the finals. It was focused on the question: what if cinema programming could be shaped by real audience demand instead of guesswork?
 
 ## Core Features
 
@@ -178,20 +178,8 @@ cd client
 npm run build
 ```
 
-## Important MVP Notes
-
-- This is an MVP, not a production-ready cinema platform.
-- Stripe is intended to run in test mode for local/demo use.
-- The recommendation and prediction features are heuristic and explainable, not trained AI/ML models.
-- Movie licensing is assumed to remain under cinema/distributor control. Kinora validates demand and manages workflows; it does not bypass film rights.
-- `prototype/` is archived reference material and is not the production frontend.
-
 ## Documentation
 
 - `LIFECYCLE.md` explains campaign and screening state transitions.
 - `docs/` contains supporting project documentation.
 - `supabase/` contains database migrations and seed data.
-
-## Competition Context
-
-Kinora was created as a student competition MVP. The goal was to demonstrate a complete technical and business concept for demand-driven cinema programming: audiences get a voice, cinemas reduce programming risk, and underused cinema capacity can become new revenue through screenings and private bookings.
